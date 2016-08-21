@@ -1,0 +1,50 @@
+<template>
+  <div id="note-displayer">
+    {{{ mark(getActiveRaws.content) }}}
+  </div>
+</template>
+
+<script>
+  import { getActiveRaws } from '../vuex/getters';
+  import marked from 'marked';
+
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: true,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code) {
+      return require('highlight.js').highlightAuto(code).value;
+    }
+  });
+
+  export default {
+    vuex: {
+      getters: {
+        getActiveRaws,
+      },
+    },
+    methods: {
+      mark(text) {
+        return marked(text);
+      }
+    }
+  }
+</script>
+
+<style>
+   #note-displayer
+  {
+    width: 79%;
+    min-width: 720px;
+    padding: 10px 40px;
+    box-sizing: border-box;
+    float: left;
+    margin-left: 400px;  
+  }
+
+</style>
