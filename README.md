@@ -2,6 +2,8 @@
 
 > A markdown notebook app based on Vue.js + Vuex + Vue-router
 
+## [Demo](http://gundam1993.github.io/markdown-notes-app/demo/)
+
 ## Build Setup
 
 ``` bash
