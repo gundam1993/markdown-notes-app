@@ -86,22 +86,21 @@
     #toolbar
     {
       position: fixed;
+      font-size: 32px;
       top: 0;
       left: 0;
       height: 100%;
-      width: 3%;
-      min-width: 3em;
+      width: 2em;
       background-color: #444;
       color: #767676;
-      padding: 35px 10px 25px 10px;
+      padding: 1em 0.3em;
       box-sizing: border-box;
       z-index: 1;
 
       
       i
       {
-        font-size: 1.5em;
-        margin: 8px 0;
+        margin: 0.25em 0;
         cursor: pointer;
         display: block;
       }
@@ -120,7 +119,7 @@
   .iconfont 
   {
     font-family:"iconfont" !important;
-    font-size:16px;
+    font-size:32px;
     font-style:normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;

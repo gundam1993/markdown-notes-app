@@ -41,10 +41,10 @@
   {
     width: 79%;
     min-width: 720px;
-    padding: 10px 40px;
+    padding: 1em 2.5em;
     box-sizing: border-box;
     float: left;
-    margin-left: 400px;  
+    margin-left: 410px;  
   }
 
 </style>

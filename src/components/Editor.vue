@@ -68,8 +68,8 @@
   #editor
   {
     height: 100%;
-    width: 97%;
-    float: right;
+    font-size: 32px;
+    margin-left:2em;
 
     input
     {
@@ -81,7 +81,7 @@
       border-bottom: 2px solid #999;
       outline: none;
       background-color: #ccc;
-      padding-left: 10px;
+      padding-left: 0.5em;
       font-size: 20px;
     }
 
@@ -98,7 +98,7 @@
         border: none;
         display: block;
         box-sizing: border-box;
-        padding: 10px;
+        padding: 1em;
         background-color: #333;
         color: #FFF;
         font-size: 18px;
@@ -113,7 +113,7 @@
       height: 96%;
       float: left;
       box-sizing: border-box;
-      padding: 20px;
+      padding: 1em;
       overflow: auto;
     }
 
