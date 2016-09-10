@@ -1,67 +1,55 @@
 <template>
     <div class="modal-mask"  transition="modal">
       <div class="modal-body">
-        <h2>{{ hint }}</h2>
+        <p>{{{ content }}}</p>
           <div class="modal-btns"
                v-show="this.type === 'modal'">
-            <button class="btn btn-yes" @click="confirm()">OK</button>
-            <button class="btn btn-no" @click="this.toggleModal()">Cancel</button>
+            <button class="btn btn-yes" @click="confirm()">确定</button>
+            <button class="btn btn-no" @click="this.toggleModal()">取消</button>
           </div>
           <div class="alert-btm"
                v-show="this.type === 'alert'">
-            <button class="btn btn-no" @click="this.toggleModal()">OK</button>
+            <button class="btn btn-yes" @click="this.toggleModal()">确定</button>
           </div>
       </div>
     </div>
 </template>
 
 <script>
-  import { toggleModal, deleteRaw, editRaw, abandonEdit } from '../vuex/actions'
+  import { toggleModal, } from '../vuex/actions'
 
   export default {
     vuex: {
       actions:{
         toggleModal,
-        deleteRaw,
-        editRaw,
-        abandonEdit,
       },
     },
-    data() {
-      return {
-        type : 'modal',
-      }
+    props: {
+      type: {
+        type: String,
+        default: '',
+      },
+      content: {
+        type: String,
+        default: '',
+      },
+      onConfirm: {
+        type: Function
+      },
     },
-    props: ['hint'],
     methods: {
       confirm() {
-        switch (this.hint) {
-          case 'Want to delete?' :
-            this.deleteRaw();
-            break;
-          case 'Want to save?' :
-            this.editRaw();
-            break;
-          case 'Leave without save?' :
-            this.abandonEdit();
-            break;
+        this.$emit('confirm');
+        var getType = {};
+        if (this.isFunction(this.onConfirm)) {
+          this.onConfirm();
         }
         this.toggleModal();
-        this.$route.router.go('/Index')
-      }
-    },
-    ready() {
-      console.log(this.type);
-      switch (this.hint) {
-          case 'Want to delete?' :
-          case 'Want to save?' :
-          case 'Leave without save?' :
-            this.type = 'modal';
-            break;
-          case 'Please Enter Title!' :
-            this.type = 'alert';
-            break;
-        }
+      },
+      isFunction(functionToCheck) {
+          var getType = {};
+          return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+      },
     }
   }
 </script>
@@ -82,15 +70,17 @@
 
     .modal-body
     {
-      width: 600px;
+      font-size: 20px;
+      min-width: 20em;
       box-sizing: border-box;
-      padding: 30px 40px;
+      padding: 1.5em 2em;
       background-color: #FFF;
-      border-radius: 6px;
+      border-radius: 3px;
+      text-align: center;
 
-      .modal-btns
-      {
-        text-align: right;
+      p {
+        display: block;
+        margin: 1.5em auto;
       }
 
       .alert-btm
@@ -102,8 +92,8 @@
 
   .btn
   {
-    height: 30px;
-    width: 80px;
+    height: 1.5em;
+    width: 4em;
     border-radius: 5px;
     outline: none;
     font-size: 20px;
@@ -117,7 +107,7 @@
   { 
     transition: color,background-color 0.3s ease-in-out;
     color: #FFF;
-    background-color: #5DAC81;
+    background-color: #81C7D4;
   }
 
   .btn-no:hover
@@ -133,16 +123,12 @@
   }
   .modal-transition
   {
-    transition: all .3s ease;
+    transition: all .2s ease;
   }
 
   .modal-enter .modal-confirm, .modal-leave .modal-confirm 
   {
     transform: scale(1);
-  }
-  .modal-transition
-  {
-    transition: all .3s ease;
   }
 </style>
 

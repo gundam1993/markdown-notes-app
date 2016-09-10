@@ -25,15 +25,13 @@
     </div>
   </div>
 
-  <modal 
-   v-if="getModalState"
-   :hint="msg"></modal>
+  <modal v-if="getModalState" :type="modalType" :content="modalContent" @confirm="modalFunction">
 </template>
 
 <script>
   import Modal from './modal.vue'
   import { getActiveRaws, getTitleNow, getModalState } from '../vuex/getters'
-  import { newRaw, toggleFavorite, toggleModal } from '../vuex/actions'
+  import { newRaw, toggleFavorite, toggleModal, deleteRaw, editRaw, abandonEdit } from '../vuex/actions'
 
   export default {
     components:{
@@ -41,7 +39,9 @@
     },
     data() {
       return {
-        msg: ""
+        modalType: "",
+        modalContent: "",
+        modalFunction: "",
       }
     },
     vuex: {
@@ -54,24 +54,44 @@
         newRaw,
         toggleFavorite,
         toggleModal,
+        deleteRaw,
+        editRaw,
+        abandonEdit,
       },
     },
     methods: {
       editBtn() {
         if (this.getTitleNow === "") {
-          this.msg = 'Please Enter Title!';
-          this.toggleModal();
+          this.modalType = "alert"
+          this.modalContent = 'Please Enter Title!';
+          this.modalFunction = function () {
+            return;
+          }
         }else{
-          this.msg = 'Want to save?';
-          this.toggleModal();
+          this.modalType = "modal";
+          this.modalContent = 'Want to save?';
+          this.modalFunction = function () {
+            this.editRaw();
+            this.$route.router.go('/Index');
+          }
         }
+        this.toggleModal();
       },
       deleteBtn() {
-        this.msg = 'Want to delete?';
+        this.modalType = "modal";
+        this.modalContent = 'Want to delete?';
+        this.modalFunction = function () {
+            this.deleteRaw();
+          }
         this.toggleModal();
       },
       abandonBtn() {
-        this.msg = 'Leave without save?';
+        this.modalType = "modal";
+        this.modalContent = 'Leave without save?';
+        this.modalFunction = function () {
+            this.abandonEdit();
+            this.$route.router.go('/Index');
+          }
         this.toggleModal();
       }
     }
